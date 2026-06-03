@@ -23,6 +23,9 @@ If you are using OpenSim Moco, also verify that the Moco MATLAB interface is ava
 org.opensim.modeling.opensimMoco.GetMocoVersionAndDate()
 ```
 
+
+Experimental trajectories used by the upper-level objective are assumed to have already been generated from CAMS-Knee raw data through OpenSim inverse kinematics.
+
 ## Main files
 
 1. `squatOpt.m` solves the lower-level OpenSim/Moco squat optimization for one subject and one set of weights.
@@ -64,9 +67,32 @@ The scripts are intended for a MATLAB + OpenSim/Moco workflow. The main dependen
   - `squatOptHalf.m`, if using half-squat analysis
 - Project-specific data and model files:
   - OpenSim models in `models/`
-  - inverse kinematics data in `IKResults/`
-  - experimental data such as `exp_ds_full.mat`
   - saved result folders such as `Results/` and `bilvlIOC/`
+
+## Data preparation
+
+This workflow uses experimental squat trajectories derived from the [CAMS-Knee dataset](https://cams-knee.orthoload.com/). Access to the original CAMS-Knee data is managed by the dataset provider and may require a data-use agreement.
+
+To reproduce the analyses, first obtain the CAMS-Knee data and process it locally through OpenSim inverse kinematics:
+
+```text
+CAMS-Knee experimental data
+        |
+        v
+OpenSim inverse kinematics
+        |
+        v
+processed joint-angle trajectories
+        |
+        v
+exp_ds_full.mat and IKResults/
+        |
+        v
+IOC analysis scripts
+```
+
+The scripts assume that the processed trajectories are already available, for example as `exp_ds_full.mat` and files in `IKResults/`. These files should contain the subject-specific hip, knee, and ankle trajectories used for comparison with the simulated results.
+
 
 ## Weight vector
 
@@ -235,7 +261,12 @@ If MATLAB cannot find `org.opensim.modeling`, OpenSim has not been configured co
 
 `squatOpt.m` loads custom goal plugins using `opensimCommon.LoadOpenSimLibraryExact`. Make sure the DLL files exist in the expected build folder before running the optimization.
 
-### 3. Check paths before running
+### 3. Prepare CAMS-Knee-derived trajectories first
+
+The optimization scripts expect processed joint-angle trajectories. If `exp_ds_full.mat` or the files in `IKResults/` are missing, obtain the CAMS-Knee data, run OpenSim inverse kinematics, and generate these files locally.
+
+
+### 4. Check paths before running
 
 Some scripts assume a specific folder structure and use Windows-style path separators. If you clone the repository on another machine, update paths such as:
 
@@ -247,7 +278,7 @@ bilvlIOC/
 RelWithDebInfo/
 ```
 
-### 4. Check active loop values
+### 5. Check active loop values
 
 Some scripts are intentionally configured to run only one subject or one setting. For example:
 
@@ -258,6 +289,21 @@ s.subject = 1
 ```
 
 Update these values if you want to run all subjects, individual and group settings, or different selection criteria.
+
+### 6. Recommended `.gitignore` entries
+
+Generated data and result files can be large, so they are usually better kept outside version control:
+
+```gitignore
+exp_ds_full.mat
+IKResults/
+Results/
+bilvlIOC/
+*.mot
+*.sto
+*.fig
+*.xlsx
+```
 
 ## References and citations
 
@@ -318,6 +364,37 @@ Recommended PRIMA citation:
   author       = {Zhang, Z.},
   howpublished = {Available at http://www.libprima.net, DOI: 10.5281/zenodo.8052654},
   year         = {2023}
+}
+```
+
+### CAMS-Knee dataset
+
+This workflow uses experimental squat trajectories derived from the CAMS-Knee dataset. The raw dataset should be obtained from the CAMS-Knee/Orthoload website and processed through OpenSim inverse kinematics before running the IOC scripts.
+
+- CAMS-Knee dataset: [CAMS-Knee.orthoload.com](https://cams-knee.orthoload.com/)
+- CAMS-Knee publication DOI: [10.1016/j.jbiomech.2017.09.022](https://doi.org/10.1016/j.jbiomech.2017.09.022)
+
+Recommended CAMS-Knee citations:
+
+```bibtex
+@misc{CAMS1,
+  author = {Damm, P. and Taylor, W. R. and others},
+  title = {{CAMS-Knee.orthoload.com}},
+  year = {2019},
+  note = {Julius Wolff Institute – Charité Universitätsmedizin Berlin and Institute for Biomechanics – ETH Zürich}
+}
+
+@article{CAMS2,
+  title = {A comprehensive assessment of the musculoskeletal system: The CAMS-Knee data set},
+  volume = {65},
+  ISSN = {0021-9290},
+  DOI = {10.1016/j.jbiomech.2017.09.022},
+  journal = {Journal of Biomechanics},
+  publisher = {Elsevier BV},
+  author = {Taylor, William R. and Sch\"{u}tz, Pascal and Bergmann, Georg and List, Renate and Postolka, Barbara and Hitz, Marco and Dymke, J\"{o}rn and Damm, Philipp and Duda, Georg and Gerber, Hans and Schwachmeyer, Verena and Hosseini Nasab, Seyyed Hamed and Trepczynski, Adam and Kutzner, Ines},
+  year = {2017},
+  month = dec,
+  pages = {32--39}
 }
 ```
 
