@@ -2,10 +2,10 @@ function [time, data, iter] = squatOpt(s, weights)
 
 import org.opensim.modeling.*;
 pardir = fileparts(pwd);
-opensimCommon.LoadOpenSimLibraryExact([pardir '\RelWithDebInfo\osimMocoHeightGoal.dll']);
-opensimCommon.LoadOpenSimLibraryExact([pardir '\RelWithDebInfo\osimMocoBalanceGoal.dll']);
-opensimCommon.LoadOpenSimLibraryExact([pardir '\RelWithDebInfo\osimMocoBalanceGoalRight.dll']);
-opensimCommon.LoadOpenSimLibraryExact([pardir '\RelWithDebInfo\osimMocoLigamentGoal.dll']);
+opensimCommon.LoadOpenSimLibraryExact('\RelWithDebInfo\osimMocoHeightGoal.dll');
+opensimCommon.LoadOpenSimLibraryExact('\RelWithDebInfo\osimMocoBalanceGoal.dll');
+opensimCommon.LoadOpenSimLibraryExact('\RelWithDebInfo\osimMocoBalanceGoalRight.dll');
+opensimCommon.LoadOpenSimLibraryExact('\RelWithDebInfo\osimMocoLigamentGoal.dll');
 
 modelName = {'K1L_scaled_sl_na_rots.osim',...
 			 'K2L_scaled_sl_na.osim',...
@@ -22,7 +22,7 @@ whichSide = lower(modelType(end));
 model = getTorqueDrivenModel(modelName{s.subject}, s.optForce);
 
 % Initialise Moco Study
-study = MocoStudy([pardir '/SquatOpt__' whichSide '.moco']);
+study = MocoStudy(['/SquatOpt__' whichSide '.moco']);
 
 problem = study.updProblem();
 problem.setModel(model);
@@ -127,12 +127,12 @@ guess.setState(['/jointset/knee_'  whichSide '/knee_flexion_' whichSide '/value'
 guess.setState(['/jointset/ankle_' whichSide '/ankle_angle_'  whichSide '/value'], [bound(3,3), bound(3,4)]);
 guess.setState("/jointset/back/lumbar_extension/value", [bound(4,3), bound(4,4)]);
 solver.setGuess(guess);
-study.print([pardir '\SquatOpt_0.moco']);
+study.print('SquatOpt_0.moco');
 
 % Solve the problem.
 solution = study.solve();
 solution.unseal();
-resultPath = [pardir '\Results\' modelType '_sol.mot'];
+resultPath = ['\Results\' modelType '_sol.mot'];
 solution.write(resultPath);
 % disp(solution.getStatus());
 % study.visualize(solution);
