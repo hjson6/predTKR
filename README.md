@@ -33,21 +33,6 @@ Experimental trajectories used by the upper-level objective are assumed to have 
 3. `weightOptPop.m` optimizes one shared population/group-level weight vector across all subjects.
 4. `bilevelSol.m` selects the best saved bi-level IOC result and computes performance metrics.
 5. `weightComp.m` compares recovered weight factors between settings.
- 
-The main workflow is:
-
-```text
-weightOpt.m / weightOptPop.m
-        |
-        v
-    squatOpt.m
-        |
-        v
- simulated .mot files and saved solution metrics
-        |
-        v
- bilevelSol.m / weightComp.m
-```
 
 ## Required dependencies
 
