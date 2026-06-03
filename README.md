@@ -64,7 +64,6 @@ The scripts are intended for a MATLAB + OpenSim/Moco workflow. The main dependen
   - `osimMocoLigamentGoal.dll`
 - Project-specific helper functions, for example:
   - `readMotFile.m`
-  - `squatOptHalf.m`, if using half-squat analysis
 - Project-specific data and model files:
   - OpenSim models in `models/`
   - saved result folders such as `Results/` and `bilvlIOC/`
