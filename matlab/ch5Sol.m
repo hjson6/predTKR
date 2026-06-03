@@ -84,7 +84,7 @@ for subNum  = 1:6
     %% Sim
     
     if dirType(subNum) == 0
-        motDir = ['C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\Results\' subjects{subNum}];
+        motDir = [pwd '\Results\' subjects{subNum}];
         motName = [subjects{subNum} '_sol_' num2str(bestIdx) '.mot'];
     elseif dirType(subNum) == 1
         weight.K1L = [0.004, 1, 2.6, 0.01];
@@ -93,7 +93,7 @@ for subNum  = 1:6
         weight.K5R = [0.004, 5, 3, 0.05];
         weight.K7L = [0.004, 5, 2.8, 0.04];
         weight.K8L = [0.004, 5, 3, 0.05];
-        motDir = ['C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\Results\CAMS_Knee\' subjects{subNum}];
+        motDir = [pwd '\cpp\CAMS_Knee\' subjects{subNum}];
         motName = [subjects{subNum} '_a' num2str(weight.(subjects{subNum})(1))...
             'b' sprintf('%02d', weight.(subjects{subNum})(2))...
             'c' sprintf('%.1f', weight.(subjects{subNum})(3))...
@@ -117,7 +117,7 @@ for subNum  = 1:6
     tickSize = 12;
     % labelSize = 14;
     
-    saveDir = ['C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\Matlab\ch5results\' settings{setting} '\'];
+    saveDir = [pwd '\cpp\ch5results\' settings{setting} '\'];
     set(groot, 'DefaultAxesFontWeight', 'bold', 'DefaultAxesFontSize', tickSize);
     
     if plot_traj == 1
