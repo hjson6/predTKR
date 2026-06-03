@@ -71,7 +71,7 @@ bilvlMetrics.(bestDirName(1:end-1)) = struct();
 
 for subNum = 1:6
 
-    resultDir = ['C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\bilvlIOC\' settings{setting} '\'];
+    resultDir = [pwd '\bilvlIOC\' settings{setting} '\'];
 
     if setting == 1
         fileName = [subjects{subNum} '_solutions.mat'];
