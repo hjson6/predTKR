@@ -180,7 +180,7 @@ import org.opensim.modeling.*;
 pardir = fileparts(pwd);
 
 % Load the base model.
-model = Model([pardir '\Models\' modelName]);
+model = Model([pardir '\models\' modelName]);
 
 % Initialize the system
 % model.updForceSet().clearAndDestroy();
