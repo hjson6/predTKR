@@ -1,6 +1,6 @@
 clear all; close all; clc;
 
-resultDir = 'G:\My Drive\bilvlIOC\';
+resultDir = [pwd, '\bilvlIOC\'];
 load([resultDir 'popOpt.mat']);
 fields = fieldnames(metricSave);
 subjects = fields(1:6)';

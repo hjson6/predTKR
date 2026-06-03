@@ -1,7 +1,8 @@
 clear all; close all; clc;
 
-dirs = {'C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\Matlab\ch5results',...
-        'C:\Users\hojin\Documents\PhD\OpenSim 4.4\squatOpt\build\bilvlIOC'};
+pardir = fileparts(pwd);
+dirs = {[pardir '\cpp\ch5results',...
+        [pwd '\bilvlIOC']};
 settings = {'Individual', 'group'};
 subjects = {'K1L', 'K2L', 'K3R', 'K5R', 'K7L', 'K8L'};
 
